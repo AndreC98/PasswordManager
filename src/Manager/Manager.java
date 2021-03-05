@@ -33,7 +33,7 @@ public class Manager {
                 keyboard.nextLine();
                 add(keyboard);
             }else if(option == 2) {
-                view();
+                view(keyboard);
             }else if (option == 3) {
                 edit();
             }else if (option == 4) {
@@ -70,8 +70,21 @@ public class Manager {
         }
     }
 
-    private void view(){
+    private void view(Scanner keyboard){
 
+        System.out.println("Select an option below");
+        System.out.println("1. View all");
+        System.out.println("2. Search");
+        int option = keyboard.nextInt();
+
+        if(option == 1) {
+            allObjects = load();
+            if(allObjects.size() > 0) {
+                for(int i = 0; i < allObjects.size(); i++) {
+                    System.out.println(allObjects.get(i));
+                }
+            }
+        }
     }
 
     private void edit(){
@@ -80,5 +93,29 @@ public class Manager {
 
     private void delete(){
 
+    }
+
+    private ArrayList<ProgramObject> load(){
+        try{
+            FileInputStream fileIn = new FileInputStream("res/saved.bin");
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+
+            boolean loop = true;
+            try{
+                while(loop) {
+                    object = (ProgramObject) in.readObject();
+                    if(object != null) {
+                        allObjects.add(object);
+                    } else {
+                        loop = false;
+                    }
+            }
+                fileIn.close();
+                in.close();
+            } catch(EOFException e){}
+        } catch (Exception e) {
+            System.out.println("Error");
+        }
+        return allObjects;
     }
 }

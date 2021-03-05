@@ -3,7 +3,7 @@ package Object;
 import java.io.Serializable;
 
 public class ProgramObject implements Serializable{
-
+    private static final long serialVersionUID = 4172304297720653145L;
     private String website;
     private String password;
 
@@ -26,5 +26,9 @@ public class ProgramObject implements Serializable{
 
     public void setPassword(String password) {
         this.password = password;
-    }   
+    } 
+    
+    public String toString() {
+        return "Website: " + this.website + " password: " + this.password;
+    }
 }
